@@ -2,6 +2,7 @@
   "name": "ai-escape-room",
   "private": true,
   "version": "1.0.0",
+  "engines": { "node": ">=22 <25" },
   "workspaces": ["client", "server"],
   "scripts": {"dev": "concurrently -k \"npm:dev -w server\" \"npm:dev -w client\"", "build": "npm run build -w client", "start": "npm start -w server"},
   "devDependencies": {"concurrently": "^9.1.2"}

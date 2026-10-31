@@ -12,9 +12,9 @@ const schemas = () => {
 };
 let models;
 export async function connectStore() {
-  if (!config.mongoUri) return false;
+  if (!config.mongoUri) { if (config.production) throw new Error('MONGODB_URI is required in production.'); return false; }
   try { await mongoose.connect(config.mongoUri, { serverSelectionTimeoutMS: 4000 }); models = schemas(); connected = true; console.log('MongoDB connected'); }
-  catch (error) { console.warn(`MongoDB unavailable; using demo memory store (${error.message})`); }
+  catch (error) { if (config.production) throw new Error('MongoDB connection failed; production startup stopped.'); console.warn(`MongoDB unavailable; using demo memory store (${error.message})`); }
   return connected;
 }
 export const isDurable = () => connected;
