@@ -1,0 +1,3 @@
+const base=import.meta.env.VITE_API_BASE_URL||'http://localhost:5000/api';
+export async function api(path,options={}){const response=await fetch(`${base}${path}`,{credentials:'include',...options,headers:{'Content-Type':'application/json',...(options.headers||{})}});let body;try{body=await response.json();}catch{throw new Error('The server returned an unreadable response.');}if(!response.ok||!body.success)throw Object.assign(new Error(body.error?.message||'Request failed.'),{status:response.status,code:body.error?.code});return body.data;}
+export const post=(path,data={})=>api(path,{method:'POST',body:JSON.stringify(data)});
